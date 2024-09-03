@@ -1,0 +1,51 @@
+TABLE Riders 
+    * id_rider - INT, AUTO_INCREMENT, PRIMARY KEY
+    * first_name - VARCHAR(50), NOT NULL
+    * last_name - VARCHAR(50), NOT NULL
+    * date_of_birth - DATE
+    * height - DECIMAL(5,2)
+    * country_of_origin - INT, -- klucz obcy do tabeli 'Countries'
+    * club_id - INT, -- klucz obcy do tabeli 'Clubs'
+    * speciality_id - INT, -- klucz obcy do tabeli 'Specialities'
+
+
+TABLE Countries
+
+
+TABLE Clubs
+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
+
+
+TABLE ClubsRiders
+
+
+TABLE Specialities
+    * speciality_id - 
+    * speciality_name - 
+
+
+TABLE Races
+
+
+TABLE TypesOfStage
+
+
+TABLE Stages
+
+
+TABLE ResaltsOfStages
+
+
+TABLE Classifications
+
+
+TABLE Sponsors
+
+
+TABLE Sponsorship
+
+
+TABLE StageBonuses
+
+
+TABLE BonusResults
