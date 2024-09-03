@@ -13,7 +13,7 @@ TABLE Countries
 
 
 TABLE Clubs
-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
+
 
 
 TABLE ClubsRiders
