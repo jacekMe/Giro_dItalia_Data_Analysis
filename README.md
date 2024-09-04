@@ -17,20 +17,24 @@
    * Przeprowadzenie analizy statystycznej wyścigów
    * Identyfikacja kluczowych czynników wpływających na wyniki zawodników
 4. Zbiór danych
+
    Dane użyte w projekcie pochodzą z publicznie dostępnych źródeł, takich jak strony internetowe z wynikami sportowymi, API wyścigów kolarskich oraz archiwa danych sportowych.
    Główne kategorie danych obejmują:
    * wyniki etapów (data, czas, różnice czasowe, zwycięzca)
    * profile etapów (dystans, przewyższenia, czas)
    * informacje o zawodnikach (wiek, drużyna, narodowość)
    * informacje o drużynach (nazwa, skład)
-5. Struktura projektu
+     
+6. Struktura projektu
+
    * data/:
    * sql/:
    * notebooks/:
    * visualizations/: 
-   * reports/: 
-6. Instrukcja użycia
-7. Postępy
+   * reports/:
+     
+8. Instrukcja użycia
+9. Postępy
 7. Plany rozwoju
 9. Kontakt
     
