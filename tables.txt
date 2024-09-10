@@ -1,39 +1,77 @@
 TABLE Riders 
+
     * id_rider - INT, AUTO_INCREMENT, PRIMARY KEY
     * first_name - VARCHAR(50), NOT NULL
     * last_name - VARCHAR(50), NOT NULL
     * date_of_birth - DATE
     * height - DECIMAL(5,2)
-    * country_of_origin - INT, -- klucz obcy do tabeli 'Countries'
-    * club_id - INT, -- klucz obcy do tabeli 'Clubs'
-    * speciality_id - INT, -- klucz obcy do tabeli 'Specialities'
+    * country_of_origin - INT, -- foreign key to 'Countries'
+    * club_id - INT, -- foreign key to 'Clubs'
+    * speciality_id - INT, -- foreign key to 'Specialities'
+    * national_champion BOOLEAN DEFAULT FALSE
+    FOREIGN KEY (country_of_origin) REFERENCES countries(country_id)
+    FOREIGN KEY (club_id) REFERENCES clubs(club_id)
+    FOREIGN KEY (speciality_id) REFERENCES specialities(speciality_id)
 
 
 TABLE Countries
 
+    * country_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * country_name - VARCHAR(40), NOT NULL
+    * country_code - VARCHAR(3), NOT NULL
 
-TABLE Clubs
+TABLE Teams
+    
+    * team_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * team_name - VARCHAR(60), NOT NULL
+    * team_country_id - INT, -- foreign key to 'Countries'
+    * start_date - DATE
+    * end_date - DATE
+    FOREIGN KEY (team_country_id) REFERENCES countries(country_id)
 
 
+TABLE TeamsRiders
 
-TABLE ClubsRiders
-
+    * team_rider_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * rider_id - INT, -- foreign key to 'Riders'
+    * race_id - INT, foreign key to 'Races'
 
 TABLE Specialities
-    * speciality_id - 
-    * speciality_name - 
+
+    * speciality_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * speciality_name - VARCHAR(100), NOT NULL
 
 
 TABLE Races
 
+    * race_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * year - INT, NOT NULL
+    * start_date - DATE, NOT NULL
+    * end_date - DATE, NOT NULL
+    * number_of_stages INT, NOT NULL
+    * total_distance - DECIMAL(10, 2), NOT NULL
+    * start_country_id - INT, -- foreign key to 'Countries'
+    * finish_country_id - INT, -- foreign key to 'Countries'
+    * start_city - VARCHAR(40), NOT NULL
+    * finish_city - VARCHAR(40), NOT NULL
+    * description - TEXT
+    FOREIGN KEY (start_country_id) REFERENCES countries(country_id)
+    FOREIGN KEY (finish_country_id) REFERENCES countries(country_id)
 
-TABLE TypesOfStage
+TABLE StageTypes
 
+    * stage_type_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * stage_type_name - VARCHAR(50), NOT NULL
 
 TABLE Stages
 
+    * stage_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * race_id - INT, -- foreign key to 'Races'
+    * stage_number - INT, NOT NULL
+    * stage_date - DATE, NOT NULL
+    * stage_type_id - INT, 
 
-TABLE ResaltsOfStages
+TABLE StageResults
 
 
 TABLE Classifications
