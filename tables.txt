@@ -9,9 +9,9 @@ TABLE Riders
     * club_id - INT, -- foreign key to 'Clubs'
     * speciality_id - INT, -- foreign key to 'Specialities'
     * national_champion BOOLEAN DEFAULT FALSE
-    FOREIGN KEY (country_of_origin) REFERENCES countries(country_id)
-    FOREIGN KEY (club_id) REFERENCES clubs(club_id)
-    FOREIGN KEY (speciality_id) REFERENCES specialities(speciality_id)
+    FOREIGN KEY (country_of_origin) REFERENCES Countries(country_id)
+    FOREIGN KEY (club_id) REFERENCES Clubs(club_id)
+    FOREIGN KEY (speciality_id) REFERENCES Specialities(speciality_id)
 
 
 TABLE Countries
@@ -27,7 +27,7 @@ TABLE Teams
     * team_country_id - INT, -- foreign key to 'Countries'
     * start_date - DATE
     * end_date - DATE
-    FOREIGN KEY (team_country_id) REFERENCES countries(country_id)
+    FOREIGN KEY (team_country_id) REFERENCES Countries(country_id)
 
 
 TABLE TeamsRiders
@@ -35,6 +35,9 @@ TABLE TeamsRiders
     * team_rider_id - INT, AUTO_INCREMENT, PRIMARY KEY
     * rider_id - INT, -- foreign key to 'Riders'
     * race_id - INT, foreign key to 'Races'
+    * role_team - VARCHAR(30), NOT NULL, -- example values: 'leader', 'domestique', 'sprinter', etc.
+    FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
+    FOREIGN KEY (race_id) REFERENCES Races(race_id)
 
 TABLE Specialities
 
@@ -55,8 +58,8 @@ TABLE Races
     * start_city - VARCHAR(40), NOT NULL
     * finish_city - VARCHAR(40), NOT NULL
     * description - TEXT
-    FOREIGN KEY (start_country_id) REFERENCES countries(country_id)
-    FOREIGN KEY (finish_country_id) REFERENCES countries(country_id)
+    FOREIGN KEY (start_country_id) REFERENCES Countries(country_id)
+    FOREIGN KEY (finish_country_id) REFERENCES Countries(country_id)
 
 TABLE StageTypes
 
@@ -69,21 +72,73 @@ TABLE Stages
     * race_id - INT, -- foreign key to 'Races'
     * stage_number - INT, NOT NULL
     * stage_date - DATE, NOT NULL
-    * stage_type_id - INT, 
+    * stage_type_id - INT, -- foreign key to 'StageTypes'
+    * start_city - VARCHAR(50), NOT NULL
+    * finish_city - VARCHAR(50), NOT NULL
+    * distance - DECIMAL(10, 2), NOT NULL
+    * elevation_gain - DECIMAL(10, 2)
+    * stage_time_limit - TIME, -- time limit for completing the stage 
+    FOREIGN KEY (race_id) REFERENCES Races(race_id)
+    FOREIGN KEY (stage_type_id) REFERENCES StageTypes(stage_type_id)
 
 TABLE StageResults
 
+    * stage_result_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * rider_id - INT, -- foreign key to 'Riders'
+    * stage_id - INT, -- foreign key to 'Stages'
+    * classification_id - INT, foreign key to 'Classifications'
+    * position - INT, NOT NULL
+    * time - TIME, NOT NULL
+    * points - INT
+    * status - ENUM('finished', 'abandoned', disqualified') DEFAULT 'finished'
+    FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
+    FOREIGN KEY (stage_id) REFERENCES Stages(stage_id)
+    FOREIGN KEY (classification_id) REFERENCES Classification(classification_id)
 
 TABLE Classifications
 
+    * classification_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * classification_name - VARCHAR(30), NOT NULL
+    * description - TEXT
+    * jersey_color - VARCHAR(20)
 
 TABLE Sponsors
 
+    * sponsor_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * sponsor_name - VARCHAR(50), NOT NULL
+    * sponsor_country_id - INT, -- foreign key to 'Countries'
+    * industry - VARCHAR(50)
 
 TABLE Sponsorship
 
+    * sponsorship_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * classification_id - INT, -- foreign key to 'Classifications'
+    * sponsor_id - INT, -- foreign key to 'Sponsors'
+    * race_id - INT, -- foreign key to 'Races'
+    * amount - DECIMAL(10, 2)
+    * description - TEXT
+    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
+    FOREIGN KEY (sponsor_id) REFERENCES Sponsors(sponsor_id)
+    FOREIGN KEY (race_id) REFERENCES Races(race_id)
 
 TABLE StageBonuses
 
+    * stage_bonus_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * stage_id - INT, -- foreign key to 'Stages'
+    * classification_id - INT, -- foreign key to 'Classifications'
+    * location - VARCHAR(50), NOT NULL
+    * category - VARCHAR(50), NOT NULL
+    * number_of_places - INT, NOT NULL
+    FOREIGN KEY (stage_id) REFERENCES Stage(stage_id)
+    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
 
 TABLE BonusResults
+
+    * bonus_result_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * stage_bonus_id - INT, -- foreign key to 'Stage_bonuses'
+    * rider_id - INT, -- foreign key to 'StageBonuses'
+    * position - INT, NOT NULL
+    * points - INT
+    * bonus_time - TIME
+    FOREIGN KEY (stage_bonus_id) REFERENCES StageBonuses(stage_bonus_id)
+    FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
