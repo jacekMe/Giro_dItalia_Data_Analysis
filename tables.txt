@@ -33,9 +33,11 @@ TABLE Teams
 TABLE TeamsRiders
 
     * team_rider_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * team_id - INT, -- foreign key to 'Teams'
     * rider_id - INT, -- foreign key to 'Riders'
     * race_id - INT, foreign key to 'Races'
     * role_team - VARCHAR(30), NOT NULL, -- example values: 'leader', 'domestique', 'sprinter', etc.
+    FOREIGN KEY (team_id) REFERENCES Teams(team_id)
     FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
     FOREIGN KEY (race_id) REFERENCES Races(race_id)
 
