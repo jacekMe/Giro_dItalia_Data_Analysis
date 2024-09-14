@@ -6,11 +6,11 @@ TABLE Riders
     * date_of_birth - DATE
     * height - DECIMAL(5,2)
     * country_of_origin - INT, -- foreign key to 'Countries'
-    * club_id - INT, -- foreign key to 'Clubs'
+    * team_id - INT, -- foreign key to 'Clubs'
     * speciality_id - INT, -- foreign key to 'Specialities'
     * national_champion BOOLEAN DEFAULT FALSE
     FOREIGN KEY (country_of_origin) REFERENCES Countries(country_id)
-    FOREIGN KEY (club_id) REFERENCES Clubs(club_id)
+    FOREIGN KEY (team_id) REFERENCES Clubs(team_id)
     FOREIGN KEY (speciality_id) REFERENCES Specialities(speciality_id)
 
 
@@ -113,6 +113,42 @@ TABLE Classifications
     * classification_name - VARCHAR(30), NOT NULL
     * description - VARCHAR(150)
     * jersey_color - VARCHAR(20)
+
+TABLE RaceClassification
+
+    * race_classification_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * race_id - INT, -- foreign key to 'Races'
+    * rider_id - INT, -- foreign key to 'Riders'
+    * classification_id - INT, -- foreign key to 'Classification'
+    * points - INT, 
+    * time - TIME
+    * rank - INT
+    * status - ENUM('active', 'finished') DEFAULT 'finished'
+    FOREIGN KEY (race_id) REFERENCES Races(race_id)
+    FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
+    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
+
+TABELA ClassificationCategories
+
+    * category_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * classification_id - INT, -- foreign key to 'Classification'
+    * category_name - VARCHAR(30), NOT NULL
+    * points_for_first_place - INT
+    * points_for_second_place - INT
+    * points_for_third_place - INT
+    * points_for_fourth_place - INT
+    * points_for_fifth_place - INT
+    * points_for_sixth_place - INT
+    * points_for_seventh_place - INT
+    * points_for_eighth_place - INT
+    * points_for_ninth_place - INT
+    * points_for_tenth_place - INT
+    * points_for_eleventh_place - INT
+    * points_for_twelfth_place - INT
+    * points_for_thirteenth_place - INT
+    * points_for_fourteenth_place - INT
+    * points_for_fifteenth_place - INT
+    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
 
 TABLE Sponsors
 
