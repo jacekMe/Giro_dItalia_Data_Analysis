@@ -117,16 +117,16 @@ TABLE Classifications
 TABLE RaceClassification
 
     * race_classification_id - INT, AUTO_INCREMENT, PRIMARY KEY
+    * classification_id - INT, -- foreign key to 'Classification'
     * race_id - INT, -- foreign key to 'Races'
     * rider_id - INT, -- foreign key to 'Riders'
-    * classification_id - INT, -- foreign key to 'Classification'
     * points - INT, 
     * time - TIME
     * rank - INT
     * status - ENUM('active', 'finished') DEFAULT 'finished'
+    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
     FOREIGN KEY (race_id) REFERENCES Races(race_id)
     FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
-    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
 
 TABELA ClassificationCategories
 
@@ -174,20 +174,18 @@ TABLE StageBonuses
 
     * stage_bonus_id - INT, AUTO_INCREMENT, PRIMARY KEY
     * stage_id - INT, -- foreign key to 'Stages'
-    * classification_id - INT, -- foreign key to 'Classifications'
+    * category_id - INT, -- foreign key to 'ClassificationCategories'
     * location - VARCHAR(50), NOT NULL
-    * category - VARCHAR(50), NOT NULL
-    * number_of_places - INT, NOT NULL
     FOREIGN KEY (stage_id) REFERENCES Stages(stage_id)
-    FOREIGN KEY (classification_id) REFERENCES Classifications(classification_id)
+    FOREIGN KEY (category_id) REFERENCES ClassificationCategories(category_id)
 
 TABLE BonusResults
 
     * bonus_result_id - INT, AUTO_INCREMENT, PRIMARY KEY
     * stage_bonus_id - INT, -- foreign key to 'Stage_bonuses'
     * rider_id - INT, -- foreign key to 'Riders'
-    * bonus_position - INT, NOT NULL
-    * points_bonus - INT
+    * place - INT, NOT NULL
+    * bonus_points - INT
     * bonus_time - TIME
     FOREIGN KEY (stage_bonus_id) REFERENCES StageBonuses(stage_bonus_id)
     FOREIGN KEY (rider_id) REFERENCES Riders(rider_id)
