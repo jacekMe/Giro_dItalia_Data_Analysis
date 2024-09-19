@@ -25,8 +25,8 @@ TABLE Teams
     * team_id - INT, AUTO_INCREMENT, PRIMARY KEY
     * team_name - VARCHAR(60), NOT NULL
     * team_country_id - INT, -- foreign key to 'Countries'
-    * founding_date - DATE
-    * completion_date - DATE
+    * first_season - INT
+    * last_season - INT
     FOREIGN KEY (team_country_id) REFERENCES Countries(country_id)
 
 
@@ -83,15 +83,13 @@ TABLE Stages
     * stage_number - INT, NOT NULL
     * stage_date - DATE, NOT NULL
     * stage_type_id - INT, -- foreign key to 'StageTypes'
-    * start_city_id - INT, -- foreign key to 'StartAndFinishCities'
-    * finish_city_id - INT, -- foreign key to 'StartAndFinishCities'
+    * start_finish_city_id - INT, -- foreign key to 'StartAndFinishCities'
     * distance - DECIMAL(10, 2), NOT NULL
     * elevation_gain - DECIMAL(10, 2), NOT NULL
     * stage_time_limit - TIME, -- time limit for completing the stage 
     FOREIGN KEY (race_id) REFERENCES Races(race_id)
     FOREIGN KEY (stage_type_id) REFERENCES StageTypes(stage_type_id)
-    FOREIGN KEY (start_city_id) REFERENCES StartAndFinishCities(city_id)
-    FOREIGN KEY (finish_city_id) REFERENCES StartAndFinishCities(city_id)
+    FOREIGN KEY (start_finish_city_id) REFERENCES StartAndFinishCities(city_id)
 
 TABLE StageResults
 
